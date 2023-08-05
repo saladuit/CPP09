@@ -1,0 +1,70 @@
+[
+ {
+  "directory": "/home/saladuit/repos/CPP07/ex02",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wpedantic",
+   "-std=c++98",
+   "-Iinclude/",
+   "-c",
+   "src/Color.cpp",
+   "-o",
+   "build/Color.o"
+  ],
+  "file": "src/Color.cpp"
+ },
+ {
+  "directory": "/home/saladuit/repos/CPP07/ex02",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wpedantic",
+   "-std=c++98",
+   "-Iinclude/",
+   "-c",
+   "src/main.cpp",
+   "-o",
+   "build/main.o"
+  ],
+  "file": "src/main.cpp"
+ },
+ {
+  "directory": "/home/saladuit/repos/CPP08/ex00",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wpedantic",
+   "-std=c++98",
+   "-Iinclude/",
+   "-c",
+   "src/Color.cpp",
+   "-o",
+   "build/Color.o"
+  ],
+  "file": "src/Color.cpp"
+ },
+ {
+  "directory": "/home/saladuit/repos/CPP08/ex00",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wpedantic",
+   "-std=c++98",
+   "-Iinclude/",
+   "-c",
+   "src/main.cpp",
+   "-o",
+   "build/main.o"
+  ],
+  "file": "src/main.cpp"
+ }
+]
