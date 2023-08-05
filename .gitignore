@@ -1,6 +1,7 @@
 # Project specific
 *.json
 .cache
+compile_commands.json
 
 # Prerequisites
 *.d
