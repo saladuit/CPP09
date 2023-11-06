@@ -10,28 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cstdlib>
-#include <easyfind.hpp>
-#include <iostream>
-#include <vector>
+#include <Span.hpp>
 
-int main(int, char **)
+int main()
 {
-	std::vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-	vec.push_back(4);
-	vec.push_back(5);
-	try
-	{
-		std::cout << easyfind(vec, 3) << std::endl;
-		std::cout << easyfind(vec, 42) << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	Span sp = Span(5);
+	sp.addNumber(6);
+	sp.addNumber(3);
+	sp.addNumber(17);
+	sp.addNumber(9);
+	sp.addNumber(11);
+	std::cout << sp.shortestSpan() << std::endl;
+	std::cout << sp.longestSpan() << std::endl;
 	return 0;
 }
 
