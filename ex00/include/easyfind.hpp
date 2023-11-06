@@ -17,6 +17,8 @@
 #include <Defines.hpp>
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
+#include <string>
 
 template <typename T>
 
@@ -27,7 +29,7 @@ int easyfind(T &container, int n)
 	if (it != container.end())
 		return *it;
 	else
-		throw std::exception();
+		throw std::range_error("element not found");
 }
 /* **************************Private_member_functions************************ */
 
