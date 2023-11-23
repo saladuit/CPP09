@@ -14,8 +14,7 @@
 
 /* **************************Public_member_functions************************* */
 
-template <typename T>
-void Span<T>::addNumber(T const &n)
+void Span::addNumber(unsigned int const &n)
 {
 	if (this->_size >= this->_maxSize)
 		throw std::length_error("Span is full");
@@ -23,24 +22,11 @@ void Span<T>::addNumber(T const &n)
 	this->_size++;
 }
 
-template <typename T>
-void Span<T>::addNumber(T const &n, unsigned int const &amount)
-{
-	if (this->_size + amount > this->_maxSize)
-		throw std::length_error("Span is full");
-	for (unsigned int i = 0; i < amount; i++)
-	{
-		this->_container.push_back(n);
-		this->_size++;
-	}
-}
-
-template <typename T>
-unsigned int Span<T>::shortestSpan() const
+unsigned int Span::shortestSpan() const
 {
 	if (this->_size <= 1)
 		throw std::length_error("Span is empty or has only one element");
-	std::vector<T> tmp = this->_container;
+	std::vector<unsigned int> tmp = this->_container;
 	std::sort(tmp.begin(), tmp.end());
 	unsigned int shortest = tmp[1] - tmp[0];
 	for (unsigned int i = 1; i < this->_size - 1; i++)
@@ -48,76 +34,76 @@ unsigned int Span<T>::shortestSpan() const
 		if (tmp[i + 1] - tmp[i] < shortest)
 			shortest = tmp[i + 1] - tmp[i];
 	}
-	return shortest;
+	return (shortest);
 }
 
-template <typename T>
-unsigned int Span<T>::longestSpan() const
+unsigned int Span::longestSpan() const
 {
 	if (this->_size <= 1)
 		throw std::length_error("Span is empty or has only one element");
-	std::vector<T> tmp = this->_container;
+	std::vector<unsigned int> tmp = this->_container;
 	std::sort(tmp.begin(), tmp.end());
-	return tmp[this->_size - 1] - tmp[0];
+	unsigned int longest = tmp[this->_size - 1] - tmp[0];
+	for (unsigned int i = 1; i < this->_size - 1; i++)
+	{
+		if (tmp[i + 1] - tmp[i] > longest)
+			longest = tmp[i + 1] - tmp[i];
+	}
+	return (longest);
 }
 
-template <typename T>
-unsigned int Span<T>::size() const
+unsigned int Span::size() const
 {
-	return this->_size;
+	return (this->_size);
 }
 
-template <typename T>
-unsigned int Span<T>::maxSize() const
+unsigned int Span::maxSize() const
 {
-	return this->_maxSize;
+	return (this->_maxSize);
 }
 
-template <typename T>
-std::vector<T> Span<T>::getContainer() const
+std::vector<unsigned int> Span::getContainer() const
 {
-	return this->_container;
+	return (this->_container);
 }
 
-template <typename T>
-void Span<T>::printContainer() const
+void Span::printContainer() const
 {
 	for (unsigned int i = 0; i < this->_size; i++)
 		std::cout << this->_container[i] << " ";
 	std::cout << std::endl;
 }
 
-template <typename T>
-void Span<T>::printContainer(std::string const &color) const
+void Span::printContainer(std::string const &color) const
 {
 	for (unsigned int i = 0; i < this->_size; i++)
-		std::cout << color << this->_container[i] << RESET << " ";
+		std::cout << color << this->_container[i] << " ";
 	std::cout << std::endl;
 }
 
 /* *******************************Constructors******************************* */
 
-template <typename T>
-Span<T>::Span(unsigned int n) : _size(0), _maxSize(n)
+Span::Span() : _size(0), _maxSize(0)
+{
+}
+
+Span::Span(unsigned int n) : _size(0), _maxSize(n)
 {
 	this->_container.reserve(n);
 }
 
-template <typename T>
-Span<T>::Span(Span const &src)
+Span::Span(Span const &src)
 {
 	*this = src;
 }
 
-template <typename T>
-Span<T>::~Span()
+Span::~Span()
 {
 }
 
 /* ********************************Overloads********************************* */
 
-template <typename T>
-Span<T> &Span<T>::operator=(Span const &src)
+Span &Span::operator=(Span const &src)
 {
 	if (this != &src)
 	{
@@ -125,7 +111,7 @@ Span<T> &Span<T>::operator=(Span const &src)
 		this->_size = src.size();
 		this->_maxSize = src.maxSize();
 	}
-	return *this;
+	return (*this);
 }
 
 /* ************************************************************************** */

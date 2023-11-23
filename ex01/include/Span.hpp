@@ -19,27 +19,28 @@
 #include <iostream>
 #include <vector>
 
-template <typename T>
 class Span
 {
   private:
-	std::vector<T> _container;
+	std::vector<unsigned int> _container;
 	unsigned int _size;
 	unsigned int _maxSize;
-	Span();
 
   public:
+	Span();
 	Span(unsigned int n);
 	Span(Span const &src);
 	~Span();
 	Span &operator=(Span const &src);
-	void addNumber(T const &n);
-	void addNumber(T const &n, unsigned int const &amount);
+	void addNumber(unsigned int const &n);
+	void addNumber(unsigned int const &n, unsigned int const &amount);
+	template <typename Iterator>
+	void addRange(Iterator start, Iterator end);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
 	unsigned int size() const;
 	unsigned int maxSize() const;
-	std::vector<T> getContainer() const;
+	std::vector<unsigned int> getContainer() const;
 	void printContainer() const;
 	void printContainer(std::string const &color) const;
 };
@@ -52,5 +53,6 @@ class Span
 
 /* ********************************Overloads********************************* */
 
+#include "../src/Span.tpp"
 #endif
 /* ************************************************************************** */
