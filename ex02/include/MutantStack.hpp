@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Span.hpp                                           :+:      :+:    :+:   */
+/*   MutantStack.hpp                                      :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: safoh <safoh@student.codam.nl>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,39 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPAN_HPP
-#define SPAN_HPP
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
-#include <Color.hpp>
-#include <Defines.hpp>
 #include <algorithm>
 #include <iostream>
+#include <stack>
 #include <vector>
 
-class Span
+template <typename T>
+class MutantStack : public std::stack<T>
 {
-  private:
-	std::vector<unsigned int> _container;
-	unsigned int _size;
-	unsigned int _maxSize;
-
   public:
-	Span();
-	Span(unsigned int n);
-	Span(Span const &src);
-	~Span();
-	Span &operator=(Span const &src);
-	void addNumber(unsigned int const &n);
-	void addNumber(unsigned int const &n, unsigned int const &amount);
-	template <typename Iterator>
-	void addRange(Iterator start, Iterator end);
-	unsigned int shortestSpan() const;
-	unsigned int longestSpan() const;
-	unsigned int size() const;
-	unsigned int maxSize() const;
-	std::vector<unsigned int> getContainer() const;
-	void printContainer() const;
-	void printContainer(std::string const &color) const;
+	typedef typename std::stack<T>::container_type::iterator iterator;
+
+	MutantStack() : std::stack<T>()
+	{
+	}
+	MutantStack(const MutantStack &other) : std::stack<T>(other)
+	{
+	}
+	MutantStack &operator=(const MutantStack &other)
+	{
+		if (this != &other)
+			std::stack<T>::operator=(other);
+		return *this;
+	}
+	virtual ~MutantStack()
+	{
+	}
+	iterator begin()
+	{
+		return std::stack<T>::c.begin();
+	}
+	iterator end()
+	{
+		return std::stack<T>::c.end();
+	}
 };
 
 /* **************************Private_member_functions************************ */
@@ -53,6 +57,5 @@ class Span
 
 /* ********************************Overloads********************************* */
 
-#include "../src/Span.tpp"
 #endif
 /* ************************************************************************** */
