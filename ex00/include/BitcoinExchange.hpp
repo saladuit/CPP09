@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   easyfind.hpp                                       :+:      :+:    :+:   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: safoh <safoh@student.codam.nl>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EASYFIND_HPP
-#define EASYFIND_HPP
+#ifndef BitcoinExchange_HPP
+#define BitcoinExchange_HPP
 
-#include <Color.hpp>
-#include <Defines.hpp>
-#include <algorithm>
-#include <iostream>
-#include <stdexcept>
+#include <fstream>
+#include <map>
+#include <set>
 #include <string>
 
-template <typename T>
-
-int easyfind(T &container, int n)
+class BitcoinExchange
 {
-	typename T::iterator it;
-	it = std::find(container.begin(), container.end(), n);
-	if (it != container.end())
-		return *it;
-	else
-		throw std::range_error("element not found");
-}
+  public:
+	BitcoinExchange(std::string file_name);
+	~BitcoinExchange();
+	void log();
+	void parseDataBase();
+	void validateInput(const std::string &line);
+
+  private:
+	std::fstream _file;
+	std::fstream _data;
+	std::set<std::string, int> _dates_and_prices;
+	BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange &);
+	BitcoinExchange &operator=(const BitcoinExchange &);
+};
+
 /* **************************Private_member_functions************************ */
 
 /* **************************Public_member_functions************************* */

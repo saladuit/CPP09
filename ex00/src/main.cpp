@@ -10,29 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <BitcoinExchange.hpp>
 #include <cstdlib>
-#include <easyfind.hpp>
 #include <iostream>
 #include <vector>
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
-	std::vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-	vec.push_back(4);
-	vec.push_back(5);
+	if (argc != 2)
+	{
+		std::cout << "Usage: ./bitcoin [file_name]" << std::endl;
+		return (EXIT_FAILURE);
+	}
 	try
 	{
-		std::cout << easyfind(vec, 3) << std::endl;
-		std::cout << easyfind(vec, 42) << std::endl;
+		BitcoinExchange exchange(argv[1]);
+		exchange.log();
 	}
 	catch (std::exception &e)
 	{
 		std::cout << e.what() << std::endl;
+		return (EXIT_FAILURE);
 	}
-	return 0;
+	return (EXIT_SUCCESS);
 }
 
 /* ************************************************************************** */

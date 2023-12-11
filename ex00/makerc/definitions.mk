@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME			:=EasyFind.out
+NAME			:=btc
 
 #	Compiler
 CC				:=c++
@@ -19,7 +19,7 @@ CC				:=c++
 RM				:=rm -rf
 
 #	Compiler flags
-CFLAGS			=-Wall -Wextra -Werror -Wpedantic -std=c++98
+CFLAGS			=-Wall -Wextra -Werror -Wpedantic -std=c++11
 
 #	Directories
 SRC_DIR		 	:=src
