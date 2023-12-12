@@ -28,47 +28,86 @@ BitcoinExchange::BitcoinExchange(std::string file_name)
 		throw std::runtime_error("Data base is missing");
 }
 
-void BitcoinExchange::log()
+void BitcoinExchange::run()
 {
 	std::string line;
+	std::getline(_file, line);
 	while (std::getline(_file, line))
 	{
 		try
 		{
 			validateInput(line);
-			std::cout << line << std::endl;
 		}
-		catch (std::runtime_error &e)
+		catch (std::exception &e)
 		{
 			std::cout << "Error: " << e.what() << std::endl;
 		}
 	}
-
+	std::getline(_data, line);
 	while (std::getline(_data, line))
 	{
-		/* std::cout << line << std::endl; */
+		try
+		{
+			parseDataBase(line);
+		}
+		catch (std::exception &e)
+		{
+			std::cout << "Error: " << e.what() << std::endl;
+		}
+	}
+	for (auto &it : _dates_and_quantities)
+	{
+		try
+		{
+
+			printResult(it.first, it.second);
+		}
+		catch (std::exception &e)
+		{
+			std::cout << "Error: " << e.what() << std::endl;
+		}
 	}
 }
-
-void BitcoinExchange::parseDataBase()
+void BitcoinExchange::printResult(std::string date, double quantity) const
 {
+
+	struct tm tm;
+	if (!strptime(date.c_str(), "%Y-%m-%d", &tm))
+		throw std::runtime_error("Date format incorrect => " + date + ".");
+	if (quantity < 0)
+		throw std::runtime_error("Quantity not positive => " +
+								 std::to_string(quantity));
+	if (quantity > 1000)
+		throw std::runtime_error("Quantity out of range => " +
+								 std::to_string(quantity));
+	std::cout << date << " => " << quantity << " = "
+			  << quantity * _dates_and_prices.at(date) << std::endl;
 }
+void BitcoinExchange::parseDataBase(const std::string &line)
+{
+	size_t pos = line.find(",");
+	std::string date = line.substr(0, pos);
+	double price = std::stod(line.substr(pos + 1));
+	_dates_and_prices.insert(std::make_pair(date, price));
+	/* std::cout << date << " " << price << std::endl; */
+}
+
 void BitcoinExchange::validateInput(const std::string &line)
 {
 	std::istringstream iss(line);
 	std::string date;
 	std::string delimiter;
-	int quantity;
+	double quantity;
 	std::string rest_of_line;
-	iss >> date >> delimiter >> quantity >> rest_of_line;
-	struct tm tm;
-	if (!strptime(date.c_str(), "%Y-%m-%d", &tm))
-		throw std::runtime_error("Bad input => " + date + ".");
+	iss >> date;
+	iss >> delimiter;
 	if (delimiter != "|")
-		throw std::runtime_error("Bad input => " + delimiter + ".");
-	if (quantity <= 0 || quantity > 1000)
-		throw std::runtime_error("Bad input => " + std::to_string(quantity));
-	_dates_and_prices.insert(std::make_pair(date, quantity));
+		throw std::runtime_error("No delimiter => " + delimiter + ".");
+	iss >> quantity;
+	iss >> rest_of_line;
+	if (rest_of_line.size() > 0)
+		throw std::runtime_error("Extra input => " + rest_of_line);
+	_dates_and_quantities.insert(std::make_pair(date, quantity));
 }
 
 BitcoinExchange::~BitcoinExchange()

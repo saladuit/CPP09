@@ -23,14 +23,16 @@ class BitcoinExchange
   public:
 	BitcoinExchange(std::string file_name);
 	~BitcoinExchange();
-	void log();
-	void parseDataBase();
+	void run();
+	void parseDataBase(const std::string &line);
 	void validateInput(const std::string &line);
+	void printResult(std::string date, double quantity) const;
 
   private:
 	std::fstream _file;
 	std::fstream _data;
-	std::set<std::string, int> _dates_and_prices;
+	std::map<std::string, double> _dates_and_prices;
+	std::map<std::string, double> _dates_and_quantities;
 	BitcoinExchange();
 	BitcoinExchange(const BitcoinExchange &);
 	BitcoinExchange &operator=(const BitcoinExchange &);
