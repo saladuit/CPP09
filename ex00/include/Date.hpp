@@ -9,6 +9,7 @@
 class Date
 {
   public:
+	Date();
 	Date(const std::string &date);
 	Date(const Date &other);
 	Date &operator=(const Date &rhs);
@@ -23,7 +24,6 @@ class Date
 	struct tm getTm() const;
 
   private:
-	Date();
 	struct tm _tm;
 };
 

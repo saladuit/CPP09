@@ -6,7 +6,7 @@
 /*   By: safoh <safoh@student.codam.nl>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:26:52 by safoh             #+#    #+#             */
-/*   Updated: 2023/08/05 15:55:25 by safoh            ###   ########.fr       */
+/*   Updated: 13/12/2023 02:26:22 PM safoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <set>
 #include <string>
 
+#include "Date.hpp"
+
 class BitcoinExchange
 {
   public:
@@ -25,14 +27,14 @@ class BitcoinExchange
 	~BitcoinExchange();
 	void run();
 	void parseDataBase(const std::string &line);
-	void validateInput(const std::string &line);
+	std::pair<Date, double> parseInputLine(const std::string &line);
 	void printResult(std::string date, double quantity) const;
+	void printPrices(const std::string &line) const;
 
   private:
 	std::fstream _file;
 	std::fstream _data;
-	std::map<std::string, double> _dates_and_prices;
-	std::map<std::string, double> _dates_and_quantities;
+	std::map<Date, double> _dates_and_prices;
 	BitcoinExchange();
 	BitcoinExchange(const BitcoinExchange &);
 	BitcoinExchange &operator=(const BitcoinExchange &);
