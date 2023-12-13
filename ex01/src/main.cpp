@@ -6,29 +6,29 @@
 /*   By: safoh <safoh@student.codam.nl>             //   \ \ __| | | \ \/ /   */
 /*                                                 (|     | )|_| |_| |>  <    */
 /*   Created: 2023/05/24 14:47:46 by safoh        /'\_   _/`\__|\__,_/_/\_\   */
-/*   Updated: 2023/05/24 14:47:46 by safoh        \___)=(___/                 */
+/*   Updated: 13/12/2023 02:57:13 PM safoh        \___)=(___/                 */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Span.hpp>
+#include "RPN.hpp"
+#include <cstdlib>
+#include <iostream>
 
-int main()
+int main(int argc, char **argv)
 {
-	Span sp = Span(5);
-	sp.addNumber(6);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
+	if (argc != 2)
+		throw std::invalid_argument("Invalid number of arguments");
 
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
-	Span sp2 = Span(10000);
-	std::vector<unsigned int> vec(10000, 1);
-	sp2.addRange(vec.begin(), vec.end());
-	std::cout << sp2.shortestSpan() << std::endl;
-	std::cout << sp2.longestSpan() << std::endl;
-	return 0;
+	try
+	{
+		std::cout << "Result: " << RPN::calculateRPN(argv[1]) << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 /* ************************************************************************** */
