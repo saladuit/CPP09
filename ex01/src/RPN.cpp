@@ -57,4 +57,5 @@ int RPN::calculateRPN(const std::string &expression)
 		throw std::invalid_argument("Invalid expression");
 	return (stack.top());
 }
+
 /* ************************************************************************** */
