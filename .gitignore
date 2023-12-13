@@ -3,6 +3,7 @@
 .cache
 compile_commands.json
 **/build
+btc
 
 # Prerequisites
 *.d
