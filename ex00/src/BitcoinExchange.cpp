@@ -49,19 +49,6 @@ void BitcoinExchange::run()
 			std::cout << "Error: " << e.what() << std::endl;
 		}
 	}
-	/* for (auto &it : _dates_and_prices) */
-	/* { */
-	/* 	try */
-	/* 	{ */
-	/* std::cout << std::setprecision(2) */
-	/* 		  << std::setiosflags(std::ios::fixed) << it.first << " => " */
-	/* 		  << it.second << std::endl; */
-	/* 	} */
-	/* 	catch (std::exception &e) */
-	/* 	{ */
-	/* 		std::cout << "Error: " << e.what() << std::endl; */
-	/* 	} */
-	/* } */
 	std::getline(_file, line);
 	if (line != "date | value")
 		throw std::runtime_error("Input file doesn't contain correct header.");
@@ -94,7 +81,13 @@ void BitcoinExchange::printResult(std::string date, double quantity) const
 		throw std::runtime_error("Quantity out of range => " +
 								 std::to_string(quantity));
 	if (_dates_and_prices.find(Date(date)) == _dates_and_prices.end())
-		current_price = _dates_and_prices.lower_bound(Date(date))->second;
+	{
+		auto it = _dates_and_prices.lower_bound(Date(date));
+		if (it == _dates_and_prices.begin())
+			throw std::runtime_error("No data for date => " + date);
+		it--;
+		current_price = it->second;
+	}
 	else
 		current_price = _dates_and_prices.at(Date(date));
 	std::cout << std::setprecision(2) << std::setiosflags(std::ios::fixed)
