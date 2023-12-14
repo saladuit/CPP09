@@ -6,11 +6,11 @@
 #    By: safoh <safoh@student.codam.nl>             //   \ \ __| | | \ \/ /    #
 #                                                  (|     | )|_| |_| |>  <     #
 #    Created: 2023/05/24 15:08:00 by safoh        /'\_   _/`\__|\__,_/_/\_\    #
-#    Updated: 2023/05/24 15:08:00 by safoh        \___)=(___/                  #
+#    Updated: 14/12/2023 02:05:59 PM safoh        \___)=(___/                  #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			:=MutantStack.out
+NAME			:=PmergeMe
 
 #	Compiler
 CC				:=c++
@@ -19,7 +19,7 @@ CC				:=c++
 RM				:=rm -rf
 
 #	Compiler flags
-CFLAGS			=-Wall -Wextra -Werror -Wpedantic -std=c++98
+CFLAGS			=-Wall -Wextra -Werror -Wpedantic -std=c++14
 
 #	Directories
 SRC_DIR		 	:=src

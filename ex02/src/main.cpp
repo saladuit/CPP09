@@ -6,36 +6,28 @@
 /*   By: safoh <safoh@student.codam.nl>             //   \ \ __| | | \ \/ /   */
 /*                                                 (|     | )|_| |_| |>  <    */
 /*   Created: 2023/05/24 14:47:46 by safoh        /'\_   _/`\__|\__,_/_/\_\   */
-/*   Updated: 2023/05/24 14:47:46 by safoh        \___)=(___/                 */
+/*   Updated: 14/12/2023 02:11:26 PM safoh        \___)=(___/                 */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <MutantStack.hpp>
+#include "PmergeMe.hpp"
+#include <cstdlib>
 
-int main()
+int main(int argc, char **argv)
 {
-	MutantStack<int> mstack;
-	mstack.push(5);
-	mstack.push(17);
-	std::cout << mstack.top() << std::endl;
-	mstack.pop();
-	std::cout << mstack.size() << std::endl;
-	mstack.push(3);
-	mstack.push(5);
-	mstack.push(737);
-	//[...]
-	mstack.push(0);
-	MutantStack<int>::iterator it = mstack.begin();
-	MutantStack<int>::iterator ite = mstack.end();
-	++it;
-	--it;
-	while (it != ite)
+	if (argc < 2)
 	{
-		std::cout << *it << std::endl;
-		++it;
+		std::cout << "Usage: ./PmergeMe [digit] [digit] [digit] [...]"
+				  << std::endl;
+		return (EXIT_FAILURE);
 	}
-	std::stack<int> s(mstack);
-	return 0;
+	std::vector<std::string> args(argv + 1, argv + argc);
+	for (auto &arg : args)
+	{
+		std::cout << arg << std::endl;
+	}
+	pmergeme(args);
+	return (EXIT_SUCCESS);
 }
 
 /* ************************************************************************** */

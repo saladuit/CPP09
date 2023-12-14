@@ -1,61 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   MutantStack.hpp                                      :+:      :+:    :+: */
-/*                                                    +:+ +:+         +:+     */
-/*   By: safoh <safoh@student.codam.nl>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/05 16:07:42 by safoh             #+#    #+#             */
-/*   Updated: 2023/08/05 16:16:26 by safoh            ###   ########.fr       */
+/*                                                   .--.  _                  */
+/*  PmergeMe.hpp                                    |o_o || |                 */
+/*                                                  |:_/ || |_ _   ___  __    */
+/*  By: safoh <safoh@student.codam.nl>             //   \ \ __| | | \ \/ /    */
+/*                                                (|     | )|_| |_| |>  <     */
+/*  Created: 14/12/2023 02:06:36 PM by safoh     /'\_   _/`\__|\__,_/_/\_\    */
+/*  Updated: 14/12/2023 02:15:50 PM by safoh     \___)=(___/                  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MUTANTSTACK_HPP
-#define MUTANTSTACK_HPP
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
 
 #include <algorithm>
 #include <iostream>
 #include <stack>
 #include <vector>
 
-template <typename T>
-class MutantStack : public std::stack<T>
+namespace PMERGEME_HPP
 {
-  public:
-	typedef typename std::stack<T>::container_type::iterator iterator;
-
-	MutantStack() : std::stack<T>()
+void pmergeme(std::vector<std::string> &args)
+{
+	std::sort(args.begin(), args.end());
+	for (auto &arg : args)
 	{
+		std::cout << arg << std::endl;
 	}
-	MutantStack(const MutantStack &other) : std::stack<T>(other)
-	{
-	}
-	MutantStack &operator=(const MutantStack &other)
-	{
-		if (this != &other)
-			std::stack<T>::operator=(other);
-		return *this;
-	}
-	virtual ~MutantStack()
-	{
-	}
-	iterator begin()
-	{
-		return std::stack<T>::c.begin();
-	}
-	iterator end()
-	{
-		return std::stack<T>::c.end();
-	}
-};
-
-/* **************************Private_member_functions************************ */
-
-/* **************************Public_member_functions************************* */
-
-/* *******************************Constructors******************************* */
-
-/* ********************************Overloads********************************* */
+}
+}; // namespace PMERGEME_HPP
 
 #endif
 /* ************************************************************************** */
