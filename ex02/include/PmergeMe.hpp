@@ -18,17 +18,20 @@
 #include <stack>
 #include <vector>
 
-namespace PMERGEME_HPP
+namespace pmergeme
 {
-void pmergeme(std::vector<std::string> &args)
+template <typename Container>
+void insertion_sort(Container &args)
 {
 	std::sort(args.begin(), args.end());
+	std::cout << "After sorting:";
 	for (auto &arg : args)
 	{
-		std::cout << arg << std::endl;
+		std::cout << " " << arg;
 	}
+	std::cout << std::endl;
 }
-}; // namespace PMERGEME_HPP
+}; // namespace pmergeme
 
 #endif
 /* ************************************************************************** */
