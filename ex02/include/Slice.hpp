@@ -23,6 +23,8 @@ class Slice
   public:
 	Slice() : _start(), _end(){};
 	Slice(Container &c) : _start(c.begin()), _end(c.end()){};
+	Slice(typename Container::iterator start, typename Container::iterator end)
+		: _start(start), _end(end){};
 	Slice(const Slice &other) : _start(other._start), _end(other._end){};
 	Slice &operator=(const Slice &rhs);
 	~Slice();

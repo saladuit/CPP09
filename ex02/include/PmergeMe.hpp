@@ -19,25 +19,23 @@
 #include <vector>
 
 #include "Slice.hpp"
+#include "Subset.hpp"
+
 namespace pmergeme
 {
-	namespace utils
+template <typename Container>
+void insertion_sort(Container &args)
+{
+	Subset<Container> subset(args);
+	subset.merge_insertion_sort();
+	// with class nsubset and slice class
+	std::cout << "After sorting:";
+	for (auto &arg : args)
 	{
-		template <typename Container>
-		static void tes(){};
+		std::cout << " " << arg;
 	}
-	template <typename Container>
-	void insertion_sort(Container &args)
-	{
-		std::sort(args.begin(), args.end());
-		std::cout << "After sorting:";
-		utils::tes<Container>();
-		for (auto &arg : args)
-		{
-			std::cout << " " << arg;
-		}
-		std::cout << std::endl;
-	};
+	std::cout << std::endl;
+};
 }; // namespace pmergeme
 
 #endif
