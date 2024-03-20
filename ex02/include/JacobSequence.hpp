@@ -12,7 +12,7 @@
 
 #ifndef JACOBSEQUENCE_HPP
 #define JACOBSEQUENCE_HPP
-
+// https://github.com/Morwenn/cpp-sort/blob/1.x.y-stable/include/cpp-sort/detail/merge_insertion_sort.h
 #include <cstddef>
 
 class JacobSequence
