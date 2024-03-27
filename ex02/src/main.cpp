@@ -36,7 +36,7 @@ void sort_container(int argc, char **argv, const std::string &container_name)
 	std::chrono::time_point<std::chrono::steady_clock> start =
 		std::chrono::steady_clock::now();
 	Container numbers = args_to_container<Container>(argc, argv);
-	pmergeme::insertion_sort(numbers);
+	pmergeme::merge_insertion_sort(numbers);
 	std::chrono::time_point<std::chrono::steady_clock> end =
 		std::chrono::steady_clock::now();
 	std::chrono::duration<double> diff = end - start;
