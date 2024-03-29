@@ -21,45 +21,45 @@
 
 namespace pmergeme
 {
-	template <typename T>
-	void sortPair(T &a, T &b)
-	{
-		if (a > b)
-			std::swap(a, b);
-	}
-
-	template <typename T>
-	void mergePairs(T &a1, T &b1, T &a2, T &b2)
-	{
-		sortPair(a1, b1);
-		sortPair(a2, b2);
-		if (a1 > a2)
-		{
-			std::swap(a1, a2);
-			std::swap(b1, b2);
-		}
-	};
-
 	template <typename Container>
-	void recursion(Container &args, size_t first, size_t last, size_t step)
+	void recursion(Container &args, size_t first, size_t last)
 	{
-		auto size = last - first;
+		size_t size = last - first;
+
 		if (size < 2)
 			return;
 		bool has_stray = (size % 2 != 0);
-		auto end = has_stray ? last - 1 : last;
-		for (size_t i = first; i < end; i += step)
+		size_t end = has_stray ? last - 1 : last;
+		size_t end_b = end;
+		size_t start_a = first;
+		size_t start_b = (end_b - first) / 2 + start_a;
+		size_t end_a = start_b;
+		size_t group_size = end_a - start_a;
+		std::cout << "start_a: " << start_a << " end_a: " << end_a << std::endl;
+		std::cout << "start_b: " << start_b << " end_b: " << end_b << std::endl;
+		for (size_t i = 0; i < group_size; i += (first) ? 2 : 1)
 		{
-			swap_if_greater(args[i], args[i + step]);
+			if (args[start_a + i] > args[start_b + i])
+			{
+				std::cout << "Swapping " << args[start_a + i] << " with "
+						  << args[start_b + i] << std::endl;
+				std::swap(args[start_a + i], args[start_b + i]);
+				if (first && group_size > 1)
+				{
+					std::swap(args[start_a + i + 1], args[start_b + i + 1]);
+					std::cout << "Swapping " << args[start_a + i + 1]
+							  << " with " << args[start_b + i + 1] << std::endl;
+				}
+			}
 		}
+		recursion(args, start_b, end_b);
 	};
 
-	template <typename Container, typename T>
+	template <typename Container>
 	void merge_insertion_sort(Container &args)
 	{
 		size_t size = args.size();
-		std::list<T> main_chain;
-		recursion(args, 0, size - 1, 1);
+		recursion(args, 0, size);
 		std::cout << "After sorting:";
 		for (auto &arg : args)
 		{
@@ -71,3 +71,30 @@ namespace pmergeme
 
 #endif
 /* ************************************************************************** */
+
+/*
+ * 0. 5231476
+ * 1. 52 31 47    6
+ * 2. 25 13 47    6
+ *    ab ab ab    b
+ * 3.1 25 13   47
+ * 3.2 25 14   47
+ *     a  b    b     -
+ * 3.3 -
+ * 3.4 13
+ *     25 47
+ *     47 25 13
+ * 4. 4 2 1
+ *    7 5 3 6
+ *
+ * 1. Group into pairs
+ * 2. Sort pair elements
+ * 3. Recurse
+ * 3.1 Group into pairs
+ * 3.2 Sort pair elements
+ * 3.3 Recurse
+ * 3.3.1 Group into pairs
+ * ...
+ * 3.4 Jacobsthal
+ * 4. Jacobsthal
+ */
