@@ -25,6 +25,7 @@ namespace pmergeme
 	void recursion(Container &args, size_t first, size_t last)
 	{
 		size_t size = last - first;
+		static size_t original_size = 0;
 
 		if (size < 2)
 			return;
@@ -35,20 +36,16 @@ namespace pmergeme
 		size_t start_b = (end_b - first) / 2 + start_a;
 		size_t end_a = start_b;
 		size_t group_size = end_a - start_a;
-		std::cout << "start_a: " << start_a << " end_a: " << end_a << std::endl;
-		std::cout << "start_b: " << start_b << " end_b: " << end_b << std::endl;
+		if (original_size == 0)
+			original_size = group_size * 2;
 		for (size_t i = 0; i < group_size; i += (first) ? 2 : 1)
 		{
 			if (args[start_a + i] > args[start_b + i])
 			{
-				std::cout << "Swapping " << args[start_a + i] << " with "
-						  << args[start_b + i] << std::endl;
 				std::swap(args[start_a + i], args[start_b + i]);
 				if (first && group_size > 1)
 				{
 					std::swap(args[start_a + i + 1], args[start_b + i + 1]);
-					std::cout << "Swapping " << args[start_a + i + 1]
-							  << " with " << args[start_b + i + 1] << std::endl;
 				}
 			}
 		}
