@@ -18,8 +18,8 @@
 class JacobSequence
 {
   private:
-	size_t _current_value;
 	size_t _next_value;
+	size_t _power_of_2;
 
   public:
 	JacobSequence();
@@ -27,8 +27,6 @@ class JacobSequence
 	JacobSequence &operator=(const JacobSequence &rhs);
 	~JacobSequence();
 
-	size_t getCurrentValue() const;
-	size_t getNextValue() const;
 	size_t next();
 };
 

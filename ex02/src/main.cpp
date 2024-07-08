@@ -36,14 +36,34 @@ void sort_container(int argc, char **argv, const std::string &container_name)
 	std::chrono::time_point<std::chrono::steady_clock> start =
 		std::chrono::steady_clock::now();
 	Container numbers = args_to_container<Container>(argc, argv);
-	pmergeme::merge_insertion_sort(numbers);
+	PMergeMe<Container> p_merge_me(numbers);
+	p_merge_me.sort();
 	std::chrono::time_point<std::chrono::steady_clock> end =
 		std::chrono::steady_clock::now();
 	std::chrono::duration<double> diff = end - start;
+	std::cout << " After sorting:";
+	for (size_t i = 0; i < numbers.size(); ++i)
+	{
+		std::cout << " " << numbers[i];
+	}
+	std::cout << std::endl;
 	std::cout << "Time to process a range of " << argc - 1 << " elements with "
 			  << container_name << ": " << std::setiosflags(std::ios::fixed)
 			  << diff.count() << " μs" << std::endl;
 }
+
+/**
+ * @brief Main function
+ * @param argc Number of arguments
+ * @param argv Arguments
+ * @return int
+ *
+ * 7 6 5 4 3 2 1 0
+ * 3 2 1 0 7 6 5 4
+ *         5 4 7 6
+ *             6 7
+ *
+ */
 
 int main(int argc, char **argv)
 {
@@ -63,7 +83,7 @@ int main(int argc, char **argv)
 	}
 	try
 	{
-		sort_container<std::deque<int>>(argc, argv, "std::list");
+		sort_container<std::deque<int>>(argc, argv, "std::deque");
 	}
 	catch (const std::exception &e)
 	{
