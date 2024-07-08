@@ -7,6 +7,7 @@
 #include <iostream>
 #include <list>
 #include <stack>
+#include <stdexcept>
 #include <vector>
 
 template <typename C>
@@ -28,7 +29,14 @@ class PMergeMe
 	{
 		_sort_pairs();
 		_recursive_sort();
-		_insert_jacobsthal();
+		try
+		{
+			_insert_jacobsthal();
+		}
+		catch (const std::out_of_range &e)
+		{
+			std::cerr << "\nError: " << e.what() << "\n\n";
+		}
 	};
 
   private:
@@ -53,10 +61,6 @@ class PMergeMe
 		_args[y] = tmp;
 		if (_parent)
 		{
-			// my 1 and 2 are paired with my parents 1 and 2
-			// 15 14 13 12 11 10 9 8|7 6 5 4|3 2|1 0
-			//                                   0 1
-			//                               2 3
 			_parent->_swapped(x, y);
 		}
 	}
@@ -137,15 +141,14 @@ class PMergeMe
 	void _insert_jacobsthal()
 	{
 
-		std::cout << "before:";
-		for (size_t i = 0; i < _args.size(); ++i)
-		{
-			std::cout << " " << _args[i];
-		}
-		std::cout << std::endl;
+		/* std::cout << "before:"; */
+		/* for (size_t i = 0; i < _args.size(); ++i) */
+		/* { */
+		/* 	std::cout << " " << _args[i]; */
+		/* } */
+		/* std::cout << std::endl; */
 		JacobSequence jacob;
 		size_t to_sort = _pair_gap;
-		std::cout << "to_insert: " << to_sort << std::endl;
 		size_t inserted = 0;
 		_move(0, _pair_gap - 1);
 		to_sort--;
@@ -155,10 +158,8 @@ class PMergeMe
 			size_t group_size = jacob.next();
 			if (group_size > to_sort)
 			{
-				// TODO: do not include the loner
 				group_size = to_sort;
 			}
-			std::cout << "group_size: " << group_size << std::endl;
 			for (size_t i = 0; i < group_size; i++)
 			{
 				size_t index = group_size - i - 1;
@@ -166,49 +167,22 @@ class PMergeMe
 				// TODO: optimze end_index
 				/* size_t end = to_sort + len; */
 				size_t index_to_move_to =
-					_binary_search(_args[index], to_sort, len);
+					_binary_search(_args[index], to_sort, len - 1);
 				_move(index, index_to_move_to - 1);
 				to_sort--;
 				inserted++;
 			}
 		}
 
-		std::cout << "after:";
-		for (size_t i = 0; i < _args.size(); ++i)
-		{
-			std::cout << " " << _args[i];
-		}
-		std::cout << std::endl;
+		/* std::cout << "after:"; */
+		/* for (size_t i = 0; i < _args.size(); ++i) */
+		/* { */
+		/* 	std::cout << " " << _args[i]; */
+		/* } */
+		/* std::cout << std::endl; */
 	}
-
-}; // namespace pmergeme
+};
 
 #endif
-/* ************************************************************************** */
 
-/*
- * 0. 5231476
- * 1. 52 31 47    6
- * 2. 25 13 47    6
- *    ab ab ab    b
- * 3.1 25 13   47
- * 3.2 25 14   47
- *     a  b    b     -
- * 3.3 -
- * 3.4 13
- *     25 47
- *     47 25 13
- * 4. 4 2 1
- *    7 5 3 6
- *
- * 1. Group into pairs
- * 2. Sort pair elements
- * 3. Recurse
- * 3.1 Group into pairs
- * 3.2 Sort pair elements
- * 3.3 Recurse
- * 3.3.1 Group into pairs
- * ...
- * 3.4 Jacobsthal
- * 4. Jacobsthal
- */
+/* ************************************************************************** */

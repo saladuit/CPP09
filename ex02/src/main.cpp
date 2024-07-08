@@ -52,19 +52,6 @@ void sort_container(int argc, char **argv, const std::string &container_name)
 			  << diff.count() << " μs" << std::endl;
 }
 
-/**
- * @brief Main function
- * @param argc Number of arguments
- * @param argv Arguments
- * @return int
- *
- * 7 6 5 4 3 2 1 0
- * 3 2 1 0 7 6 5 4
- *         5 4 7 6
- *             6 7
- *
- */
-
 int main(int argc, char **argv)
 {
 	if (argc < 2)
