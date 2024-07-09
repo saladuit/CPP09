@@ -12,7 +12,7 @@
 
 #	Flags
 ifdef	DEBUG
-	CFLAGS					+=-g
+	CFLAGS					+=-g -DDEBUG=1
 endif
 
 ifdef	FSAN

@@ -49,7 +49,11 @@ void sort_container(int argc, char **argv, const std::string &container_name)
 	}
 	if (!sorted)
 	{
-		std::cerr << " - Error: the container is not sorted";
+		std::cerr << " - \x1b[31mError: the container is not sorted\x1b[0m";
+	}
+	else
+	{
+		std::cout << " - \x1b[32mThe container is sorted\x1b[0m";
 	}
 	std::cout << std::endl;
 	std::cout << "Time to process a range of " << argc - 1 << " elements with "

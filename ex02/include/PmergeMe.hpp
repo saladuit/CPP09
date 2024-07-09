@@ -117,12 +117,12 @@ class PMergeMe
 	}
 
 	size_t _binary_search(typename C::value_type value, size_t start,
-						  size_t len)
+						  size_t end)
 	{
 		size_t s = start;
+		size_t ee = end;
 		try
 		{
-			size_t end = start + len;
 			while (start != end)
 			{
 				size_t middle = (start + end) / 2;
@@ -144,45 +144,82 @@ class PMergeMe
 		catch (const std::out_of_range &e)
 		{
 			std::cerr << "\nstart: " << s << "\n\n";
-			std::cerr << "\nlen: " << len << "\n\n";
+			std::cerr << "\nend: " << ee << "\n\n";
 			std::cerr << "\nsearch: " << e.what() << "\n\n";
 			exit(1);
 		}
 	}
-	// TODO: optimze end_index
-	/* size_t end = to_sort + len; */
 	void _insert_jacobsthal()
 	{
+#ifdef DEBUG
+		for (size_t i = 0; i < _args.size(); ++i)
+		{
+			std::cout << _args[i] << " ";
+		}
+		std::cout << std::endl;
+#endif
 		JacobSequence jacob;
 		size_t to_sort = _pair_gap;
-		size_t inserted = 0;
+		typename C::value_type tmp = _args[0];
 		_move(0, _pair_gap - 1);
 		to_sort--;
-		(void)inserted++;
+#ifdef DEBUG
+		for (size_t i = 0; i < _args.size(); ++i)
+		{
+			std::cout << _args[i] << " ";
+		}
+		std::cout << '[' << tmp << ']' << std::endl;
+#endif
 		while (to_sort > 0)
 		{
+			bool sorting_stray = _args.has_stray() && to_sort == 1;
+
 			size_t group_size = jacob.next();
 			if (group_size >= to_sort)
 			{
 				group_size = to_sort;
-				/* if (_args.has_stray()) // TODO: handle stray */
-				/* { */
-				/* 	group_size--; */
-				/* } */
+				if (_args.has_stray() && !sorting_stray)
+				{
+					group_size--;
+				}
+			}
+			size_t after = to_sort - group_size;
+			if (_args.has_stray() && !sorting_stray)
+			{
+				after--;
 			}
 			for (size_t i = 0; i < group_size; i++)
 			{
 				size_t index = group_size - i - 1;
-				size_t len = inserted * 2 + 1;
-				if (to_sort + len > _args.size())
-				{
-					len = _args.size() - to_sort;
-				}
+				tmp = _args[index];
 				size_t index_to_move_to =
-					_binary_search(_args[index], to_sort, len);
+					_binary_search(_args[index], to_sort, _args.size() - after);
 				_move(index, index_to_move_to - 1);
+
+				// 75 78 53 40 76 19 70 55 39 85 91 57 20 63 68 49 52 12 36 81
+				// 22 67 29 50 90 82 28 32 62
+#ifdef DEBUG
+				for (size_t i = 0; i < _args.size(); ++i)
+				{
+					std::cout << _args[i] << " ";
+				}
+				std::cout << '[' << tmp << ']';
+				/* if (tmp == 67) */
+				{
+					std::cout << " gs: " << group_size
+							  << " to_sort: " << to_sort
+							  << " end: " << _args.size() - after
+							  << " after: " << after
+							  << " move_to: " << index_to_move_to;
+				}
+				std::cout << std::endl;
+#endif
+				if (index_to_move_to == _args.size() - after)
+				{
+					after++;
+				}
+				after++;
 				to_sort--;
-				inserted++;
 			}
 		}
 	}

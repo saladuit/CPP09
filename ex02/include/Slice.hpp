@@ -13,10 +13,10 @@ class Slice
 	typedef typename C::value_type value_type;
 	Slice() = delete;
 	Slice(C &container)
-		: _container(container), _size(container.size()), _has_stray(_size % 1),
+		: _container(container), _size(container.size()), _has_stray(_size % 2),
 		  _start(0), _end(_size){};
 	Slice(C &container, size_t start, size_t end)
-		: _container(container), _size(end - start), _has_stray(_size % 1),
+		: _container(container), _size(end - start), _has_stray(_size % 2),
 		  _start(start), _end(end){};
 	Slice &operator=(const Slice &other) = delete;
 	value_type &operator[](size_t index)
