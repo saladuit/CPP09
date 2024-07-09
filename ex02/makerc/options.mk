@@ -16,7 +16,7 @@ ifdef	DEBUG
 endif
 
 ifdef	FSAN
-	CFLAGS					+=-fsanitize=address,undefined
+	CFLAGS					+=-fsanitize=address,undefined,leak
 endif
 
 ifdef	COV

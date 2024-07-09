@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <exception>
 #include <iterator>
+#include <string>
 
 template <typename C>
 class Slice
@@ -22,10 +23,11 @@ class Slice
 	{
 		if (index >= _size)
 		{
-			throw OutOfRange("Out of range index " + std::to_string(index) +
-							 " is out of range" + std::to_string(_size) +
-							 std::string(" elements") + " and has_stray ==  " +
-							 std::to_string(_has_stray));
+			throw OutOfRange(
+				"Out of range index " + std::to_string(index) +
+				" is out of range (" + std::to_string(index + _start) + "); " +
+				std::to_string(_size) + std::string(" elements") +
+				" and has_stray ==  " + std::to_string(_has_stray));
 		}
 		return _container[_start + index];
 	}

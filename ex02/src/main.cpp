@@ -42,9 +42,14 @@ void sort_container(int argc, char **argv, const std::string &container_name)
 		std::chrono::steady_clock::now();
 	std::chrono::duration<double> diff = end - start;
 	std::cout << " After sorting:";
+	bool sorted = std::is_sorted(numbers.begin(), numbers.end());
 	for (size_t i = 0; i < numbers.size(); ++i)
 	{
 		std::cout << " " << numbers[i];
+	}
+	if (!sorted)
+	{
+		std::cerr << " - Error: the container is not sorted";
 	}
 	std::cout << std::endl;
 	std::cout << "Time to process a range of " << argc - 1 << " elements with "
@@ -56,7 +61,7 @@ int main(int argc, char **argv)
 {
 	if (argc < 2)
 	{
-		std::cout << "Usage: ./PmergeMe [digit] [digit] [digit] [...]"
+		std::cout << "Usage: ./PmergeMe [number] [number] [number] [...]"
 				  << std::endl;
 		return (EXIT_FAILURE);
 	}

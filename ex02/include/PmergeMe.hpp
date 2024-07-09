@@ -119,68 +119,74 @@ class PMergeMe
 	size_t _binary_search(typename C::value_type value, size_t start,
 						  size_t len)
 	{
-		size_t end = start + len;
-		while (start != end)
+		size_t s = start;
+		try
 		{
-			size_t middle = (start + end) / 2;
-			if (_args[middle] < value)
+			size_t end = start + len;
+			while (start != end)
 			{
-				start = middle + 1;
+				size_t middle = (start + end) / 2;
+				if (_args[middle] < value)
+				{
+					start = middle + 1;
+				}
+				else if (_args[middle] > value)
+				{
+					end = middle;
+				}
+				else
+				{
+					return middle;
+				}
 			}
-			else if (_args[middle] > value)
-			{
-				end = middle;
-			}
-			else
-			{
-				return middle;
-			}
+			return end;
 		}
-		return end;
+		catch (const std::out_of_range &e)
+		{
+			std::cerr << "\nstart: " << s << "\n\n";
+			std::cerr << "\nlen: " << len << "\n\n";
+			std::cerr << "\nsearch: " << e.what() << "\n\n";
+			exit(1);
+		}
 	}
+	// TODO: optimze end_index
+	/* size_t end = to_sort + len; */
 	void _insert_jacobsthal()
 	{
-
-		/* std::cout << "before:"; */
-		/* for (size_t i = 0; i < _args.size(); ++i) */
-		/* { */
-		/* 	std::cout << " " << _args[i]; */
-		/* } */
-		/* std::cout << std::endl; */
 		JacobSequence jacob;
 		size_t to_sort = _pair_gap;
 		size_t inserted = 0;
 		_move(0, _pair_gap - 1);
 		to_sort--;
-		inserted++;
+		(void)inserted++;
 		while (to_sort > 0)
 		{
 			size_t group_size = jacob.next();
-			if (group_size > to_sort)
+			if (group_size >= to_sort)
 			{
 				group_size = to_sort;
+				/* if (_args.has_stray()) // TODO: handle stray */
+				/* { */
+				/* 	group_size--; */
+				/* } */
 			}
 			for (size_t i = 0; i < group_size; i++)
 			{
 				size_t index = group_size - i - 1;
 				size_t len = inserted * 2 + 1;
-				// TODO: optimze end_index
-				/* size_t end = to_sort + len; */
+				if (to_sort + len > _args.size())
+				{
+					len = _args.size() - to_sort;
+				}
 				size_t index_to_move_to =
-					_binary_search(_args[index], to_sort, len - 1);
+					_binary_search(_args[index], to_sort, len);
 				_move(index, index_to_move_to - 1);
 				to_sort--;
 				inserted++;
 			}
 		}
-
-		/* std::cout << "after:"; */
-		/* for (size_t i = 0; i < _args.size(); ++i) */
-		/* { */
-		/* 	std::cout << " " << _args[i]; */
-		/* } */
-		/* std::cout << std::endl; */
 	}
+	// 1 2 3 4 5|6 7 8 9 10
 };
 
 #endif
